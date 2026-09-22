@@ -1,0 +1,9 @@
+{
+  "name": "fusion-compact-tools",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Shared local compact workspace tools for CLI, Pi and MCP clients",
+  "pi": { "extensions": ["./extension.ts"] },
+  "dependencies": { "@modelcontextprotocol/sdk": "1.30.0" }
+}
