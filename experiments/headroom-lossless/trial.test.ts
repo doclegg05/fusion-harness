@@ -59,6 +59,8 @@ test("excluded tools, failed checks, mixed media and ACK messages never reach th
 		event({ content: [{ type: "text", text }, { type: "text", text }] }),
 		event({ content: [{ type: "text", text: text.replace("matching_function_name", "failure") }] }),
 		event({ content: [{ type: "text", text: text.replace("matching_function_name", "ERROR") }] }),
+		event({ content: [{ type: "text", text: JSON.stringify(rows.map(row => ({ ...row, passed: false }))) }] }),
+		event({ content: [{ type: "text", text: JSON.stringify(rows.map(row => ({ ...row, exitCode: 1 }))) }] }),
 		event({ content: [{ type: "text", text: "ACK FUSION synthetic-run" }] })]) {
 		expect(await trial.handle(e)).toBeUndefined();
 	}

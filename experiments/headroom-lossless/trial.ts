@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 
 export const PREFIX = "Lossless JSON table: map each row to the ordered schema names; all rows retained.\n";
 const workerPath = fileURLToPath(new URL("./worker.py", import.meta.url));
-const protectedWords = /\b(error|failed|failure|fatal|exception|traceback|policy|instructions?)\b|ACK FUSION|^diff --git/im;
+const protectedWords = /\b(error|fail|failed|failing|failure|fatal|exception|traceback|policy|instructions?)\b|ACK FUSION|^diff --git/im;
 const forbiddenTools = new Set(["read", "edit", "write", "apply_patch"]);
 
 export interface ToolEvent {
@@ -113,6 +113,13 @@ export class LosslessTrial {
 		const text = part.text;
 		const bytes = Buffer.byteLength(text);
 		if (bytes < 4096 || bytes > 131072 || protectedWords.test(text) || !text.trimStart().startsWith("[")) return;
+		try {
+			const rows = JSON.parse(text);
+			if (!Array.isArray(rows) || rows.some(row => row && typeof row === "object" && (
+				row.passed === false || row.success === false || row.ok === false ||
+				(typeof row.exitCode === "number" && row.exitCode !== 0)
+			))) return;
+		} catch { return; }
 		this.totals.eligible++;
 		const started = performance.now();
 		let result: WorkerResult;
