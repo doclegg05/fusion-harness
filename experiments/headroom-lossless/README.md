@@ -58,6 +58,15 @@ bash experiments/headroom-lossless/run.sh shadow \
 
 Use your existing stack path if it differs. The launcher sets the three environment paths for this process and explicitly loads both extensions. This command starts your normal harness and can use its configured paid providers; the offline replay above does not. Shadow mode measures eligible results but forwards originals. Change `shadow` to `apply` for a deliberate session using verified compacted results. The `bash` allowlist only admits the constrained successful JSON shape; ordinary logs and plain text pass through.
 
+If your normal launch uses the existing `just fusion` recipe and its `.env` loading, keep that launch after exporting the three setup variables:
+
+```sh
+just fusion -e experiments/headroom-lossless/extension.ts \
+    --fh-headroom shadow --fh-headroom-tools bash
+```
+
+This preserves the recipe's current model stack and credential-loading behavior. The standalone `run.sh` calls Pi directly and does not load `.env` itself.
+
 `/fh-headroom-status` shows counts and token estimates. Use your normal launch command to stop using the trial; no settings need restoration. Avoid enabling another compressor in the same route while evaluating this one.
 
 ## Files
