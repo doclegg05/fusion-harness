@@ -1,0 +1,1 @@
+Copied from @earendil-works/pi-coding-agent 0.85.1 (docs/*.md and examples/extensions/, minus the doom-overlay demo) on 2026-09-23. Read-only reference for bake-off contestants. Refresh by recopying from the installed package after a Pi upgrade.
